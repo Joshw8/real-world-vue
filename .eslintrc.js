@@ -20,13 +20,6 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-debugger': 'off',
-  },
-
-  'extends': [
-    'plugin:vue/essential',
-    'eslint:recommended',
-    '@vue/typescript/recommended',
-    '@vue/prettier',
-    '@vue/prettier/@typescript-eslint'
-  ]
+    'vue/no-multiple-template-root': 0
+  }
 };

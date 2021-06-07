@@ -9,3 +9,14 @@ export interface EventItem {
   petsAllowed: boolean
   organizer: string
 }
+export interface NewEventItem {
+  category: string
+  title: string
+  description: string
+  location: string
+  pets: number
+  extras: {
+    catering: boolean,
+    music: boolean
+  }
+}
