@@ -1,14 +1,12 @@
 <template>
-  <label>
-    {{ label }}
-  </label>
   <input
-    :type="type"
-    :placeholder="label"
-    :value="modelValue"
-    @input="handleChange"
+    v-bind="$attrs"
+    type="checkbox"
+    :checked="modelValue"
+    @change="handleChange"
     class="field"
   />
+  <label v-if="label">{{ label }}</label>
 </template>
 
 <script lang="ts">
@@ -18,21 +16,17 @@ export default defineComponent({
   props: {
     label: {
       type: String,
-      required: true,
+      default: "",
     },
     modelValue: {
-      type: [String, Number],
-      required: true,
-    },
-    type: {
-      type: String,
-      default: "text",
+      type: Boolean,
+      default: false,
     },
   },
   setup(props, { emit }) {
-    const handleChange = (event: Event) => {
+    const handleChange = (event: Event): void => {
       const target = event.target as HTMLInputElement
-      emit("update:modelValue", target.value)
+      emit("update:modelValue", target.checked)
     }
 
     return {

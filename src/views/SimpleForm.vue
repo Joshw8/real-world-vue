@@ -1,68 +1,48 @@
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
-
-      <label>Select a category</label>
-      <select v-model="event.category">
-        <option
-          v-for="option in categories"
-          :value="option"
-          :key="option"
-          :selected="option === event.category"
-        >{{ option }}</option>
-      </select>
+    <form @submit.prevent="sendForm">
+      <BaseSelect
+        label="Select a category"
+        v-model="event.category"
+        :options="categories"
+      />
 
       <h3>Name & describe your event</h3>
 
-        <!-- Title -->
-        <BaseInput v-model="event.title" label="Title" type="text"/>
+      <!-- Title -->
+      <BaseInput v-model="event.title" label="Title" type="text" />
 
-        <!-- Description -->
-        <BaseInput v-model="event.description" label="Description" type="text"/>
+      <!-- Description -->
+      <BaseInput v-model="event.description" label="Description" type="text" />
 
       <h3>Where is your event?</h3>
       <!-- Location -->
-      <BaseInput v-model="event.location" label="Location" type="text"/>
+      <BaseInput v-model="event.location" label="Location" type="text" />
 
+      {{ event }}
       <h3>Are pets allowed?</h3>
       <div>
-        <input
-            type="radio"
-            v-model="event.pets"
-            :value="1"
-            name="pets"
-          />
-        <label>Yes</label>
+        <BaseRadioGroup
+          v-model="event.pets"
+          name="pets"
+          :options="radioOptions"
+        />
+        <!-- vertical -->
+        <!-- <BaseRadio :label="'Yes'" v-model="event.pets" name="pets" :value="1" /> -->
       </div>
 
       <div>
-        <input
-          type="radio"
-          v-model="event.pets"
-          :value="0"
-          name="pets"
-        />
-        <label>No</label>
+        <!-- <BaseRadio :label="'No'" v-model="event.pets" name="pets" :value="0" /> -->
       </div>
 
       <h3>Extras</h3>
       <div>
-        <input
-          type="checkbox"
-          v-model="event.extras.catering"
-          class="field"
-        />
-        <label>Catering</label>
+        <BaseCheckbox :label="'Catering'" v-model="event.extras.catering" />
       </div>
 
       <div>
-        <input
-          type="checkbox"
-          v-model="event.extras.music"
-          class="field"
-        />
-        <label>Live music</label>
+        <BaseCheckbox :label="'Live music'" v-model="event.extras.music" />
       </div>
 
       <button class="button -fill-gradient" type="submit">Submit</button>
@@ -71,43 +51,63 @@
 </template>
 
 <script lang="ts">
-import { NewEventItem } from '@/types'
-import { defineComponent, reactive, toRefs } from 'vue'
+import { NewEventItem, RadioOptionsTypes } from "@/types"
+import { defineComponent, reactive, toRefs } from "vue"
 
-import BaseInput from '@/components/BaseInput.vue';
+import BaseInput from "@/components/BaseInput.vue"
+import BaseSelect from "@/components/BaseSelect.vue"
+import BaseCheckbox from "@/components/BaseCheckbox.vue"
+import BaseRadioGroup from "@/components/BaseRadioGroup.vue"
 
 export default defineComponent({
-    components: {
-      BaseInput
-    },
+  components: {
+    BaseInput,
+    BaseSelect,
+    BaseCheckbox,
+    BaseRadioGroup,
+  },
 
-    setup(){
-        const state = reactive({
-            // Dropdown options
-            categories: [
-                'sustainability',
-                'nature',
-                'animal welfare',
-                'housing',
-                'education',
-                'food',
-                'community'] as string[],
-            // Esentially formData
-            event: {
-                category: '',
-                title: '',
-                description: '',
-                location: '',
-                pets: 1,
-                extras: {
-                    catering: false,
-                    music: false
-                }
-            } as NewEventItem
-        })
-        return {
-            ...toRefs(state)
-        }
+  setup() {
+    const state = reactive({
+      // Dropdown options
+      categories: [
+        "sustainability",
+        "nature",
+        "animal welfare",
+        "housing",
+        "education",
+        "food",
+        "community",
+      ] as string[],
+      // Esentially formData
+      event: {
+        category: "",
+        title: "",
+        description: "",
+        location: "",
+        pets: 1,
+        extras: {
+          catering: false,
+          music: false,
+        },
+      } as NewEventItem,
+      radioOptions: [
+        {
+          label: "yes",
+          value: 1,
+        },
+        {
+          label: "no",
+          value: 0,
+        },
+      ] as RadioOptionsTypes,
+    })
+    // Methods
+    const sendForm: () => {}
+    return {
+      ...toRefs(state),
+      sendForm,
     }
+  },
 })
 </script>

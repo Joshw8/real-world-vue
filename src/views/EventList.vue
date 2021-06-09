@@ -7,35 +7,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
-import EventCard from '@/components/EventCard.vue' // @ is an alias to /src
-import { EventItem } from '@/types'
+import { defineComponent, reactive, toRefs } from "vue"
+import EventCard from "@/components/EventCard.vue" // @ is an alias to /src
+import { EventItem } from "@/types"
 
-import EventService from '@/services/EventService'
+import EventService from "@/services/EventService"
 
 export default defineComponent({
-  name: 'EventList',
+  name: "EventList",
   components: {
     EventCard,
   },
   setup() {
-
     const state = reactive({
       events: [] as EventItem[],
     })
 
     EventService.getEvents()
-      .then(response => {
+      .then((response) => {
         state.events = response.data
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
       })
 
     return {
       ...toRefs(state),
     }
-
   },
 })
 </script>

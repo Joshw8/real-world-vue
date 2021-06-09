@@ -30,5 +30,19 @@
         "time": "11:00",
         "organizer": "Carey Wales"
       }
+    ],
+    "services": [
+      {
+        "id": 1,
+        "category": "animal welfare",
+        "title": "Frenz of Bunz",
+        "description": "Find your new Bunny friend at this event.",
+        "location": "Flora City",
+        "pets": 1,
+        "extras": {
+          "catering":true,
+          "music": true
+        }
+      }
     ]
   }

@@ -16,7 +16,15 @@ export interface NewEventItem {
   location: string
   pets: number
   extras: {
-    catering: boolean,
+    catering: boolean
     music: boolean
   }
 }
+
+export interface RadioOptionsType {
+  label: string
+  value: number
+}
+export type RadioOptionsTypes = RadioOptionsType[]
+
+export type SelectOptions = string[]
