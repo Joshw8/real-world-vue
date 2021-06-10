@@ -21,6 +21,10 @@ export interface NewEventItem {
   }
 }
 
+export interface ServerResponseEvents {
+  events: EventItem[]
+}
+
 export interface RadioOptionsType {
   label: string
   value: number

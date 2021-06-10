@@ -1,5 +1,6 @@
 <template>
   <input
+    :id="uuid"
     v-bind="$attrs"
     type="radio"
     :name="name"
@@ -7,10 +8,11 @@
     :value="value"
     @change="handleChange(value)"
   />
-  <label v-if="label">{{ label }}</label>
+  <label v-if="label" :for="uuid">{{ label }}</label>
 </template>
 
 <script lang="ts">
+import UniqueId from "@/features/UniqueId"
 import { defineComponent } from "vue"
 export default defineComponent({
   props: {
@@ -32,11 +34,13 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const uuid = UniqueId().getId()
     const handleChange = (value: number | string): void => {
       emit("updated:modelValue", value)
     }
 
     return {
+      uuid,
       handleChange,
     }
   },

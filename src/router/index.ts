@@ -1,18 +1,18 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import EventList from '../views/EventList.vue'
-import EventDetails from '../views/EventDetails.vue'
-import About from '@/views/About.vue'
-import SimpleForm from '@/views/SimpleForm.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
+import EventList from "../views/EventList.vue"
+import EventDetails from "../views/EventDetails.vue"
+import About from "@/views/About.vue"
+import SimpleForm from "@/views/SimpleForm.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'EventList',
+    path: "/",
+    name: "EventList",
     component: EventList,
   },
   {
-    path: '/event/:id',
-    name: 'EventDetails',
+    path: "/event/:id",
+    name: "EventDetails",
     props: true,
     component: EventDetails,
   },
@@ -26,13 +26,13 @@ const routes: Array<RouteRecordRaw> = [
   //     import(/* webpackChunkName: "about" */ '../views/About.vue'),
   // },
   {
-    path: '/about',
-    name: 'About',
+    path: "/about",
+    name: "About",
     component: About,
   },
   {
-    path: '/simpleForm',
-    name: 'SimpleForm',
+    path: "/simpleForm",
+    name: "SimpleForm",
     component: SimpleForm,
   },
 ]

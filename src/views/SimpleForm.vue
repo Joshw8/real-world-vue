@@ -8,44 +8,62 @@
         :options="categories"
       />
 
-      <h3>Name & describe your event</h3>
+      <fieldset>
+        <legend>Name & describe your event</legend>
 
-      <!-- Title -->
-      <BaseInput v-model="event.title" label="Title" type="text" />
-
-      <!-- Description -->
-      <BaseInput v-model="event.description" label="Description" type="text" />
-
-      <h3>Where is your event?</h3>
-      <!-- Location -->
-      <BaseInput v-model="event.location" label="Location" type="text" />
-
-      {{ event }}
-      <h3>Are pets allowed?</h3>
-      <div>
-        <BaseRadioGroup
-          v-model="event.pets"
-          name="pets"
-          :options="radioOptions"
+        <!-- Title -->
+        <BaseInput
+          v-model="event.title"
+          label="Title"
+          type="text"
+          :error="''"
         />
-        <!-- vertical -->
-        <!-- <BaseRadio :label="'Yes'" v-model="event.pets" name="pets" :value="1" /> -->
-      </div>
 
-      <div>
-        <!-- <BaseRadio :label="'No'" v-model="event.pets" name="pets" :value="0" /> -->
-      </div>
+        <!-- Description -->
+        <BaseInput
+          v-model="event.description"
+          label="Description"
+          type="text"
+          :error="''"
+        />
+      </fieldset>
 
-      <h3>Extras</h3>
-      <div>
-        <BaseCheckbox :label="'Catering'" v-model="event.extras.catering" />
-      </div>
+      <fieldset>
+        <legend>Where is your event?</legend>
+        <!-- Location -->
+        <BaseInput v-model="event.location" label="Location" type="text" />
+      </fieldset>
 
-      <div>
-        <BaseCheckbox :label="'Live music'" v-model="event.extras.music" />
-      </div>
+      <fieldset>
+        <legend>Are pets allowed?</legend>
+        <div>
+          <BaseRadioGroup
+            v-model="event.pets"
+            name="pets"
+            :options="radioOptions"
+            vertical
+          />
+        </div>
+      </fieldset>
 
-      <button class="button -fill-gradient" type="submit">Submit</button>
+      <fieldset>
+        <legend>Extras</legend>
+        <div>
+          <BaseCheckbox :label="'Catering'" v-model="event.extras.catering" />
+        </div>
+
+        <div>
+          <BaseCheckbox :label="'Live music'" v-model="event.extras.music" />
+        </div>
+      </fieldset>
+
+      <button
+        class="button -fill-gradient"
+        style="margin-top: 20px"
+        type="submit"
+      >
+        Submit
+      </button>
     </form>
   </div>
 </template>
@@ -58,6 +76,9 @@ import BaseInput from "@/components/BaseInput.vue"
 import BaseSelect from "@/components/BaseSelect.vue"
 import BaseCheckbox from "@/components/BaseCheckbox.vue"
 import BaseRadioGroup from "@/components/BaseRadioGroup.vue"
+
+import EventService from "@/services/EventService"
+import { AxiosResponse } from "axios"
 
 export default defineComponent({
   components: {
@@ -102,8 +123,17 @@ export default defineComponent({
         },
       ] as RadioOptionsTypes,
     })
-    // Methods
-    const sendForm: () => {}
+
+    const sendForm = () => {
+      EventService.postEvent(state.event)
+        .then((response: AxiosResponse) => {
+          console.log(response)
+        })
+        .catch((error: Error) => {
+          console.log(error)
+        })
+    }
+
     return {
       ...toRefs(state),
       sendForm,
@@ -111,3 +141,16 @@ export default defineComponent({
   },
 })
 </script>
+<style>
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+</style>

@@ -1,6 +1,7 @@
 <template>
-  <label v-if="label">{{ label }}</label>
+  <label v-if="label" :for="uuid">{{ label }}</label>
   <select
+    :id="uuid"
     :value="modelValue"
     class="field upperCase"
     @change="handleChange"
@@ -22,6 +23,8 @@
 import { defineComponent, PropType } from "vue"
 import { SelectOptions } from "@/types"
 
+import UniqueId from "@/features/UniqueId"
+
 export default defineComponent({
   props: {
     label: {
@@ -41,12 +44,14 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const uuid = UniqueId().getId()
     const handleChange = (event: Event): void => {
       const target = event.target as HTMLSelectElement
       emit("update:modelValue", target.value)
     }
 
     return {
+      uuid,
       handleChange,
     }
   },
