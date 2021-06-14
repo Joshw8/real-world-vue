@@ -2,7 +2,8 @@ import axios, { AxiosInstance, AxiosPromise } from "axios"
 import { NewEventItem } from "@/types"
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: "https://my-json-server.typicode.com/JoshW8/real-world-vue",
+  // baseURL: "https://my-json-server.typicode.com/JoshW8/real-world-vue",
+  baseURL: "http://localhost:3000",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -19,7 +20,7 @@ export default {
     return apiClient.get("/events/" + id)
   },
 
-  postEvent(form: NewEventItem): AxiosPromise {
-    return apiClient.post("/services", form)
+  postEvent(event: NewEventItem): AxiosPromise {
+    return apiClient.post("/events", event)
   },
 }

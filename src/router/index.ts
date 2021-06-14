@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 import EventList from "../views/EventList.vue"
 import EventDetails from "../views/EventDetails.vue"
 import About from "@/views/About.vue"
-import SimpleForm from "@/views/SimpleForm.vue"
+import EventCreate from "@/views/EventCreate.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,9 +31,9 @@ const routes: Array<RouteRecordRaw> = [
     component: About,
   },
   {
-    path: "/simpleForm",
-    name: "SimpleForm",
-    component: SimpleForm,
+    path: "/event/create",
+    name: "EventCreate",
+    component: EventCreate,
   },
 ]
 

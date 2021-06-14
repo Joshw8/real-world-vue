@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link :to="{name: 'EventList'}">Events</router-link> |
-      <router-link :to="{name: 'About'}">About</router-link> |
-      <router-link :to="{name: 'SimpleForm'}">New Form</router-link>
+      <router-link :to="{ name: 'EventList' }">Events</router-link> |
+      <router-link :to="{ name: 'About' }">About</router-link> |
+      <router-link :to="{ name: 'EventCreate' }">Create New Event</router-link>
     </div>
     <router-view />
   </div>
@@ -336,5 +336,4 @@ select::ms-expand {
 .button.-icon-center {
   padding: 0 20px;
 }
-
 </style>

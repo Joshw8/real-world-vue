@@ -34,7 +34,7 @@
         <BaseInput v-model="event.location" label="Location" type="text" />
       </fieldset>
 
-      <fieldset>
+      <!-- <fieldset>
         <legend>Are pets allowed?</legend>
         <div>
           <BaseRadioGroup
@@ -44,8 +44,8 @@
             vertical
           />
         </div>
-      </fieldset>
-
+      </fieldset> -->
+      <!--
       <fieldset>
         <legend>Extras</legend>
         <div>
@@ -55,6 +55,16 @@
         <div>
           <BaseCheckbox :label="'Live music'" v-model="event.extras.music" />
         </div>
+      </fieldset> -->
+
+      <fieldset>
+        <legend>Date & Time</legend>
+
+        <!-- Title -->
+        <BaseInput v-model="event.date" label="Date" type="text" :error="''" />
+
+        <!-- Description -->
+        <BaseInput v-model="event.time" label="Time" type="text" :error="''" />
       </fieldset>
 
       <button
@@ -65,30 +75,34 @@
         Submit
       </button>
     </form>
+    {{ store.state.events }}
   </div>
 </template>
 
 <script lang="ts">
+import { useStore } from "vuex"
 import { NewEventItem, RadioOptionsTypes } from "@/types"
 import { defineComponent, reactive, toRefs } from "vue"
 
 import BaseInput from "@/components/BaseInput.vue"
 import BaseSelect from "@/components/BaseSelect.vue"
-import BaseCheckbox from "@/components/BaseCheckbox.vue"
-import BaseRadioGroup from "@/components/BaseRadioGroup.vue"
+// import BaseCheckbox from "@/components/BaseCheckbox.vue"
+// import BaseRadioGroup from "@/components/BaseRadioGroup.vue"
 
 import EventService from "@/services/EventService"
 import { AxiosResponse } from "axios"
+import { v4 as uuidv4 } from "uuid"
 
 export default defineComponent({
   components: {
     BaseInput,
     BaseSelect,
-    BaseCheckbox,
-    BaseRadioGroup,
+    // BaseCheckbox,
+    // BaseRadioGroup,
   },
 
   setup() {
+    const store = useStore()
     const state = reactive({
       // Dropdown options
       categories: [
@@ -102,15 +116,14 @@ export default defineComponent({
       ] as string[],
       // Esentially formData
       event: {
+        id: "",
         category: "",
         title: "",
         description: "",
         location: "",
-        pets: 1,
-        extras: {
-          catering: false,
-          music: false,
-        },
+        organinser: "",
+        date: "",
+        time: "",
       } as NewEventItem,
       radioOptions: [
         {
@@ -124,10 +137,31 @@ export default defineComponent({
       ] as RadioOptionsTypes,
     })
 
+    const clearEventForm = (): NewEventItem => {
+      return (state.event = {
+        id: "",
+        category: "",
+        title: "",
+        description: "",
+        location: "",
+        organinser: "",
+        date: "",
+        time: "",
+      })
+    }
+
     const sendForm = () => {
-      EventService.postEvent(state.event)
+      const event = {
+        ...state.event,
+        id: uuidv4(),
+        organinser: store.state.user,
+      }
+      EventService.postEvent(event)
         .then((response: AxiosResponse) => {
+          store.commit("ADD_EVENT", event)
+
           console.log(response)
+          clearEventForm()
         })
         .catch((error: Error) => {
           console.log(error)
@@ -137,6 +171,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       sendForm,
+      store,
     }
   },
 })
